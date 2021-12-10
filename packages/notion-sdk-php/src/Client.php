@@ -375,7 +375,7 @@ class Client
      */
     public function search(string $query, string $objectType = null): array
     {
-        if (isset($objectType) && ($objectType !== 'page' || $objectType != 'database')) {
+        if (isset($objectType) && $objectType != 'page' && $objectType != 'database') {
             throw new \InvalidArgumentException('objectType can only be null, page or database');
         }
         $url = 'https://api.notion.com/v1/search';
@@ -385,7 +385,7 @@ class Client
             $data['filter'] = array('value' => $objectType, 'property' => 'object');
         }
         $resp = $this->post($url, $data);
-        return json_decode($resp->body,true);
+        return json_decode($resp->body, true);
     }
 
     protected
