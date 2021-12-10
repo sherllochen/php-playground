@@ -3,6 +3,7 @@
 namespace SherlloChen\NotionSdkPhp;
 
 use http\Exception\InvalidArgumentException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use WpOrg\Requests\Requests;
 
 class Client
@@ -16,9 +17,9 @@ class Client
      * Client constructor.
      * These three variables can be set in params or in env file.
      *
-     * @param string $apiToken Notion api token.
-     * @param string $apiBaseUrl Notion api base url.
-     * @param string $notionVersion Notion version.
+     * @param string|null $apiToken Notion api token.
+     * @param string|null $apiBaseUrl Notion api base url.
+     * @param string|null $notionVersion Notion version.
      */
     public function __construct(string $apiToken = null, string $apiBaseUrl = null, string $notionVersion = null)
     {
@@ -34,8 +35,7 @@ class Client
     /**
      * Retrieve a user with user id.
      *
-     * @param string $userId User id.
-     * @return notion user object
+     * @param $userID
      *     {
      * "object": "user",
      * "id": "6794760a-1f15-45cd-9c65-0dfe42f5135a",
@@ -46,18 +46,20 @@ class Client
      * "email": "XXXXXXX@makenotion.com"
      * }
      * }
+     * @return array
+     * @throws \Exception
      */
-    public function retrieveUser($userID)
+    public function retrieveUser(string $userID): array
     {
         $url = "https://api.notion.com/v1/users/${userID}";
-        $response = $this->get($url);
-        return json_decode($response->body);
+        $resp = $this->get($url);
+        return json_decode($resp->body);
     }
 
     /**
      * List all user.
      *
-     * @return notion user list
+     * @return array
      *
      * {
      * "object": "list",
@@ -84,18 +86,19 @@ class Client
      * "next_cursor": null,
      * "has_more": false
      * }
+     * @throws \Exception
      */
-    public function listAllUsers()
+    public function listAllUsers(): array
     {
         $url = 'https://api.notion.com/v1/users';
-        $response = $this->get($url);
-        return json_decode($response->body);
+        $resp = $this->get($url);
+        return json_decode($resp->body);
     }
 
     /**
      * Retrive a database with database id.
      *
-     * @return notion database object
+     * @return array
      * {
      * "object": "database",
      * "id": "8e2c2b76-9e1d-47d2-87b9-ed3035d607ae",
@@ -353,21 +356,24 @@ class Client
      * }
      * }
      * }
+     * @throws \Exception
      */
-    public function retriveDatabase($databaseId)
+    public function retriveDatabase($databaseId): array
     {
         $url = "https://api.notion.com/v1/databases/${databaseId}";
-        $response = $this->get($url);
-        return json_decode($response->body);
+        $resp = $this->get($url);
+        return json_decode($resp->body);
     }
 
     /**
      * Retrieve a user with user id.
      *
      * @param string $query Query string.
-     * @param string $objectType Type of object, can only be null, page or database.
+     * @param string|null $objectType Type of object, can only be null, page or database.
+     * @return array
+     * @throws \Exception
      */
-    public function search($query, $objectType = null)
+    public function search(string $query, string $objectType = null): array
     {
         if (isset($objectType) && ($objectType !== 'page' || $objectType != 'database')) {
             throw new \InvalidArgumentException('objectType can only be null, page or database');
@@ -378,26 +384,37 @@ class Client
         if (isset($objectType)) {
             $data['filter'] = array('value' => $objectType, 'property' => 'object');
         }
-        $response = $this->post($url, $data);
-        return json_decode($response->body);
+        $resp = $this->post($url, $data);
+        return json_decode($resp->body,true);
     }
 
     protected
     function get($url): \WpOrg\Requests\Response
     {
-        return Requests::get($url, $this->constructHeaders());
+        $resp = Requests::get($url, $this->constructHeaders());
+        if ($resp->status != '200') {
+            throw new \Exception($resp->body);
+        }
+        return $resp;
     }
 
+    /**
+     * @throws \Exception
+     */
     protected
     function post($url, $data): \WpOrg\Requests\Response
     {
-        return Requests::post($url, $this->constructHeaders(), json_encode($data));
+        $resp = Requests::post($url, $this->constructHeaders(), json_encode($data));
+        if ($resp->status_code != '200') {
+            throw new \Exception($resp->body);
+        }
+        return $resp;
     }
 
     /**
      * Construct headers for request.
      *
-     * @return headers array
+     * @return array of headers
      *
      * {
      * "Content-Type":"application/json",
