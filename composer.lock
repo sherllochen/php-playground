@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "50bca37b304a1b4146b92accd54fb815",
+    "content-hash": "d3484e68be4f9eceffd17f8420113c6b",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2932,6 +2932,34 @@
                 "source": "https://github.com/WordPress/Requests"
             },
             "time": "2021-11-24T14:20:18+00:00"
+        },
+        {
+            "name": "sherllo_chen/notion-sdk-php",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./packages/notion-sdk-php",
+                "reference": "72dcb89d8ee2c3d8c7f4016bbe1f404e49d8342e"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SherlloChen\\NotionSdkPhp\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sherllo Chen",
+                    "email": "sherllochen@gmail.com"
+                }
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -8022,7 +8050,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "sherllo_chen/notion-sdk-php": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
