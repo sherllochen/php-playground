@@ -20,7 +20,7 @@ class NotionController extends Controller
 //        $headers = array('Content-Type' => 'application/json','Authorization'=>$bear_token,'Notion-Version'=>env('NOTION_VERSION'));
 //        $data = array('some' => 'data');
 //        $response = Requests::get($url,$headers);
-        ddd($this->retriveDatabase('166373bd1bc34f1f856032fd5f128377'));
+        ddd($this->search('php','page'));
         return view('notion');
     }
 
@@ -354,6 +354,18 @@ class NotionController extends Controller
         return json_decode($response->body);
     }
 
+    protected function search($query, $objectType=null)
+    {
+        $url = 'https://api.notion.com/v1/search';
+        $data = array('query' => $query);
+        $data['sort'] = array('direction' => 'descending', 'timestamp' => 'last_edited_time');
+        if(isset($objectType)){
+            $data['filter'] = array('value'=>$objectType,'property'=>'object');
+        }
+        $response = $this->post($url, $data);
+        return json_decode($response->body);
+    }
+
     protected function get($url): \WpOrg\Requests\Response
     {
         return Requests::get($url, $this->constructHeaders());
@@ -361,7 +373,7 @@ class NotionController extends Controller
 
     protected function post($url, $data): \WpOrg\Requests\Response
     {
-        return Requests::post($url, $this->constructHeaders(), $data);
+        return Requests::post($url, $this->constructHeaders(), json_encode($data));
     }
 
     /**
