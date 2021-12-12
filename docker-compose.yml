@@ -19,6 +19,7 @@ services:
             XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
         volumes:
             - '.:/var/www/html'
+            - '../notion_sdk_php:/var/www/html/notion_sdk_php' #mapping local composer to container
         networks:
             - sail
         depends_on:

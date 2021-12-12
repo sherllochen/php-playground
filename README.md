@@ -7,3 +7,9 @@
 ```shell
 ./vendor/bin/sail tinker
 ```
+
+## Commands 
+1. Update local composer package
+```shell
+composer update sherllochen/notion-sdk-php --prefer-source
+```
