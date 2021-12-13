@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Library\NotionUtil;
+use App\Library\Notion\Util;
+use App\Library\Notion\Post;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -16,21 +17,20 @@ class BlogController extends Controller
         $blogDatabaseName = env('BLOG_DATABASE_NAME');
 
         $blogData = \Cache::rememberForever('blog_data', function () use ($blogDatabaseName) {
-            return NotionUtil::getBlogList($blogDatabaseName);
+            return Util::getBlogList($blogDatabaseName);
         });
         $pageIdList = \Cache::rememberForever('page_id_list', function () use ($blogData) {
-            return NotionUtil::getPageIdList($blogData);
+            return Util::getPageIdList($blogData);
         });
         $pageItems = \Cache::rememberForever('page_items', function () use ($pageIdList) {
             $tempItems = [];
             foreach ($pageIdList as $pageId) {
-                $tempItems[] = NotionUtil::getPageContent($pageId);
+                $tempItems[] = Util::getPageContent($pageId);
             }
             return $tempItems;
         });
 
-        ddd($pageItems);
-        return view('blog.index', ['blogData' => $blogData]);
+        return view('blog.index', ['blogData' => $blogData, 'blogList' => Post::index($blogData)]);
 
     }
 }

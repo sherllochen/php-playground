@@ -11,8 +11,10 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     Hello notion!    All blog from Notion.
-                    @foreach ($blogData['results'] as $post)
-                        <p>This is post {{ $post['id']}}</p>
+                    @foreach ($blogList as $post)
+                        <p>ID {{ $post->pageId}}</p>
+                        <p>TITLE {{ $post->title}}</p>
+                        <p>DATE {{ $post->publishedDate}}</p>
                     @endforeach
                 </div>
             </div>

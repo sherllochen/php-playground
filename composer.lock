@@ -2933,7 +2933,7 @@
             "dist": {
                 "type": "path",
                 "url": "./notion_sdk_php",
-                "reference": "d7e4ea844a5da136398785068a3bcfa9894553d8"
+                "reference": "e7292bd59ad4107b358cbe81f66b602bfda422de"
             },
             "type": "library",
             "autoload": {
