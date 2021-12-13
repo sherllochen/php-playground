@@ -73,6 +73,19 @@ class Post
         if (count($textSection) > 0) {
             $text = $block[$blockType]['text'][0]['plain_text'];
         }
-        return "${blockType} ${text}";
+        return Post::convertToMarkdown(['type' => $blockType, 'text' => $text]);
+    }
+
+    static public function convertToMarkdown(array $blockItem): string
+    {
+        $mapping = ['heading_1' => '#',
+            'heading_2' => '##',
+            'heading_3' => '###',
+            'heading_4' => '####',
+            'heading_5' => '#####',
+            'paragraph' => '',
+            'bulleted_list_item' => '-'
+        ];
+        return $mapping[$blockItem['type']] . ' ' . $blockItem['text'];
     }
 }

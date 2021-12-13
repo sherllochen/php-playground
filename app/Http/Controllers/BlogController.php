@@ -29,8 +29,18 @@ class BlogController extends Controller
             }
             return $tempItems;
         });
+        $parsedown = new \Parsedown();
+        return view('blog.index', ['blogData' => $blogData, 'blogList' => Post::index($blogData), 'parser' => $parsedown]);
 
-        return view('blog.index', ['blogData' => $blogData, 'blogList' => Post::index($blogData)]);
+    }
 
+    function show($id)
+    {
+//        $post = \Cache::rememberForever("page-${id}", function () use ($id) {
+//            return Post::show($id);
+//        });
+        $post = Post::show($id);
+        $parsedown = new \Parsedown();
+        return view('blog.show', ['post' => $post, 'parsedown' => $parsedown]);
     }
 }

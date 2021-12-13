@@ -25,4 +25,6 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 Route::get('/notion', [NotionController::class, 'show']);
+
 Route::get('/blog', [\App\Http\Controllers\BlogController::class, 'index']);
+Route::get('/blog/{id}', [\App\Http\Controllers\BlogController::class, 'show']);
