@@ -14,9 +14,11 @@ use App\Http\Controllers\NotionController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+Route::redirect('/', '/blog');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

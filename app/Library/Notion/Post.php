@@ -6,13 +6,13 @@ use SherlloChen\NotionSdkPhp\{Client, Utils};
 
 class Post
 {
-    public $title;
-    public $content;
-    public $publishedDate;
+    public string $title;
+    public array $content;
+    public string $publishedDate;
     /**
      * @var string
      */
-    public $pageId;
+    public string $pageId;
 
     public function __construct(string $pageId, string $title, string $published_date, array $content = [])
     {

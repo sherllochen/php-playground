@@ -36,10 +36,10 @@ class BlogController extends Controller
 
     function show($id)
     {
-//        $post = \Cache::rememberForever("page-${id}", function () use ($id) {
-//            return Post::show($id);
-//        });
-        $post = Post::show($id);
+        $post = \Cache::remember("page-${id}", 60 * 60, function () use ($id) {
+            return Post::show($id);
+        });
+//        $post = Post::show($id);
         $parsedown = new \Parsedown();
         return view('blog.show', ['post' => $post, 'parsedown' => $parsedown]);
     }
