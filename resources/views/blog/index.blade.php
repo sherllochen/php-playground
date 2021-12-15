@@ -17,9 +17,7 @@
                         </h4>
                     </a>
                     <p class="text-md font-light mt-2 text-white">
-                        The Arctic Ocean freezes every winter and much of the
-                        sea-ice then thaws every summer, and that process will
-                        continue whatever happens.
+                        {{$post->abstract}}
                     </p>
                     <p>@ {{ $post->publishedDate}}</p>
                 </blockquote>
