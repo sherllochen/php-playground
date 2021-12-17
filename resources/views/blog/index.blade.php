@@ -19,7 +19,7 @@
                     <p class="text-md font-light mt-2 text-white">
                         {{$post->abstract}}
                     </p>
-                    <p>@ {{ $post->publishedDate}}</p>
+                    <p>@ {{ $post->published_date}}</p>
                 </blockquote>
             </div>
         </div>

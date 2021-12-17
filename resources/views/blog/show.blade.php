@@ -10,13 +10,11 @@
                 {{ $post->title}}
             </h3>
             <div class="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase">
-                {{ $post->publishedDate }}
+                {{ $post->published_date }}
             </div>
         </div>
         <div class="border-t border-gray-290 pt-5 text-left">
-            @foreach($post->content as $block)
-                {!! $parsedown->text($block) !!}
-            @endforeach
+            {!! $post->html_content !!}
         </div>
     </div>
 </x-blog-layout>

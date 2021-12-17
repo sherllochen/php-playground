@@ -18,8 +18,9 @@ class PostFactory extends Factory
             'category' => $this->faker->city(),
             'content' => $this->faker->text(300),
             'abstract' => $this->faker->text(30),
-            'pageId' => $this->faker->unique()->uuid(),
-            'publishedDate' => now()
+            'html_content' => $this->faker->text(300),
+            'page_id' => $this->faker->unique()->uuid(),
+            'published_date' => now()
         ];
     }
 }

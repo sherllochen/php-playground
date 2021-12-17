@@ -42,9 +42,9 @@ class Post extends Model
             } else {
                 $publishedDate = $dataItem['created_time'];
                 $title = \SherlloChen\NotionSdkPhp\Utils::parseTitleOfDataItem($dataItem);
-                $pageArgs = ['pageId' => $pageId, 'title' => $title, 'publishedDate' => date_create($publishedDate)];
+                $pageArgs = ['page_id' => $pageId, 'title' => $title, 'published_date' => date_create($publishedDate)];
 
-                $post = Post::where('pageId', $pageId)->first();
+                $post = Post::where('page_id', $pageId)->first();
                 if ($post) {
                     $post->update($args);
                 } else {
@@ -61,7 +61,11 @@ class Post extends Model
         if ($realTimeData) {
             return self::showFromNotion($pageId);
         } else {
-            return self::where('pageId', $pageId)->firstOrFail();
+            if (is_numeric($pageId)) {
+                return self::where('id', $pageId)->firstOrFail();
+            } else {
+                return self::where('page_id', $pageId)->firstOrFail();
+            }
         }
     }
 
@@ -73,13 +77,13 @@ class Post extends Model
         $contentArray = self::blocksToMarkdownList($blockListData['results']);
         $content = self::mergeStringArray($contentArray);
         $htmlContent = self::markdownListToHtml($contentArray);
-        $args = ['pageId' => $page['id'],
+        $args = ['page_id' => $page['id'],
             'title' => $page['properties']['Name']['title'][0]['plain_text'],
-            'publishedDate' => date_create($page['created_time']),
+            'published_date' => date_create($page['created_time']),
             'content' => $content,
             'html_content' => $htmlContent,
             'abstract' => Str::of($content)->substr(0, 30)];
-        $post = Post::where('pageId', $page['id'])->first();
+        $post = Post::where('page_id', $page['id'])->first();
         if ($post) {
             $post->update($args);
         } else {
@@ -102,7 +106,7 @@ class Post extends Model
         foreach ($blockList as $block) {
             $content[] = Post::parseContentFromBlock($block);
         }
-        return new Post(['pageId' => $pageId, 'title' => $title, 'publishedDate' => date_create($publishedDate), 'content' => $content,
+        return new Post(['page_id' => $pageId, 'title' => $title, 'published_date' => date_create($publishedDate), 'content' => $content,
             'abstract' => Str::of($content)->substr(0, 30)]);
     }
 
