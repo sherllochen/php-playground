@@ -5,7 +5,7 @@ namespace App\Library\Notion;
 use SherlloChen\NotionSdkPhp\Client;
 use SherlloChen\NotionSdkPhp\Utilis;
 
-class Util
+class Utils
 {
     /**
      * Mapping from Notion data to Blog data
@@ -60,7 +60,7 @@ class Util
         $client = new \SherlloChen\NotionSdkPhp\Client();
         $databaseId = $client->searchDatabaseByName($blogDatabaseName)['id'];
         $databaseDt = $client->retrieveDatabase($databaseId);
-        $CategoryOptions = SherlloChen\NotionSdkPhp\Utils::parseSelectPropertyOptions($databaseDt);
+        $CategoryOptions = \SherlloChen\NotionSdkPhp\Utils::parseSelectPropertyOptions($databaseDt, 'Category');
         $result = [];
         foreach ($CategoryOptions as $option) {
             $result[] = $option['name'];
