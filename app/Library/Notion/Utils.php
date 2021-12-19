@@ -3,6 +3,7 @@
 namespace App\Library\Notion;
 
 use SherlloChen\NotionSdkPhp\Client;
+use SherlloChen\NotionSdkPhp\Utilis;
 
 class Util
 {
@@ -45,5 +46,25 @@ class Util
     {
         $client = new \SherlloChen\NotionSdkPhp\Client();
         return $client->retrieveBlockChildren($pageId);
+    }
+
+    /**
+     * Get category list with database name.
+     * @param string $blogDatabaseName
+     * @return array
+     * ['TECH','LIFE','FUN']
+     * @throws \Exception
+     */
+    static public function getCategoryList(string $blogDatabaseName): array
+    {
+        $client = new \SherlloChen\NotionSdkPhp\Client();
+        $databaseId = $client->searchDatabaseByName($blogDatabaseName)['id'];
+        $databaseDt = $client->retrieveDatabase($databaseId);
+        $CategoryOptions = SherlloChen\NotionSdkPhp\Utils::parseSelectPropertyOptions($databaseDt);
+        $result = [];
+        foreach ($CategoryOptions as $option) {
+            $result[] = $option['name'];
+        }
+        return $result;
     }
 }
