@@ -1,8 +1,8 @@
 <x-blog-layout>
     @include('layouts.blog.menu')
-    <div class="mt-5">
+    <div class="grid grid-flow-row-dense grid-cols-3 gap-x-5 mt-5">
         @foreach ($blogList as $post)
-            <div class=" md:w-4/12 px-4 float-left">
+            <div class="">
                 <div
                     class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg bg-pink-600">
                     <img alt="..."

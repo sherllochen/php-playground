@@ -3,7 +3,6 @@
 namespace App\Library\Notion;
 
 use SherlloChen\NotionSdkPhp\Client;
-use SherlloChen\NotionSdkPhp\Utilis;
 
 class Utils
 {

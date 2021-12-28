@@ -1,5 +1,5 @@
 <div class="flex flex-wrap py-2">
-    <div class="w-full px-4">
+    <div class="w-full">
         <nav class="relative flex flex-wrap items-center justify-between px-2 py-3 bg-pink-500 rounded">
             <div class="container px-4 mx-auto flex flex-wrap items-center justify-between">
                 <div class="w-full relative flex justify-between lg:w-auto px-4 lg:static lg:block lg:justify-start">

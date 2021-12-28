@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link rel="stylesheet" href="{{ asset('css/font-awesome-all.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/compiled-tailwind.min.css') }}">
 
     <!-- Scripts -->
@@ -125,7 +125,7 @@
                         </div>
                         <div class="mb-2 text-gray-700 mt-2">
                             <i class="fas fa-briefcase mr-2 text-lg text-gray-500"></i
-                            >Independent IT consultant pursuing freedom
+                            >Independent IT Consultant Pursuing Freedom
                         </div>
                     </div>
                     <div class="mt-10 py-5 border-t border-gray-300 text-center">
