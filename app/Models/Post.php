@@ -31,14 +31,33 @@ class Post extends Model
     static public function indexFromNotion($category, $args, $withPageDetail = false): collection
     {
         $postIdList = [];
-        $data = Util::getBlogList($category);
+        $data = Util::getBlogList(
+            [
+                "filter" => [
+                    "and" => [
+                        [
+                            "property" => "Published",
+                            "checkbox" => [
+                                "equals" => true
+                            ]
+                        ],
+                        [
+                            "property" => "category",
+                            "text" => [
+                                "equals" => $category
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        );
         if (array_key_exists('results', $data)) {
             $data = $data['results'];
         }
         foreach ($data as $dataItem) {
             $pageId = $dataItem['id'];
             if ($withPageDetail) {
-                $posts[] = self::showFromNotion($pageId)->id;
+                $postIdList[] = self::showFromNotion($pageId)->id;
             } else {
                 $publishedDate = $dataItem['created_time'];
                 $title = \SherlloChen\NotionSdkPhp\Utils::parseTitleOfDataItem($dataItem);

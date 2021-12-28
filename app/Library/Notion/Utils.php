@@ -14,16 +14,15 @@ class Utils
      */
 
     /**
-     * @param string $blogDatabaseName
      * @param array $queryArguments
      * @return array
      * @throws \Exception
      */
-    static public function getBlogList(string $blogDatabaseName, array $queryArguments = []): array
+    static public function getBlogList(array $queryArguments = []): array
     {
         $client = new \SherlloChen\NotionSdkPhp\Client();
         $seconds = 60 * 60;
-
+        $blogDatabaseName = env('BLOG_DATABASE_NAME');
         $databaseId = \Cache::remember('blog_database_id', $seconds,
             function () use ($blogDatabaseName, $client) {
                 $database = $client->searchDatabaseByName($blogDatabaseName);
